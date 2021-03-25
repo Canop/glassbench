@@ -13,6 +13,7 @@ categories = []
 chrono = { version = "0.4", features = ["serde"] }
 crossterm = "0.19.0"
 csv2svg = "0.1"
+git2 = { version="0.13", default-features=false }
 lazy_static = "1.4"
 minimad = "0.7.0"
 open = "1.1"

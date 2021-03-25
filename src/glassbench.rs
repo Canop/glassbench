@@ -12,6 +12,7 @@ use {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GlassBench {
     pub id: String,
+    pub git_info: Option<GitInfo>,
     pub name: String,
     pub tasks: Vec<TaskBench>,
 }
@@ -33,6 +34,7 @@ impl GlassBench {
             id: id.into(),
             name: name.into(),
             tasks: Vec::new(),
+            git_info: GitInfo::read(),
         }
     }
 

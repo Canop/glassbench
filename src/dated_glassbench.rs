@@ -13,15 +13,15 @@ pub const FILENAME_DATE_FORMAT: &'static str = "%Y-%m-%dT%H-%M-%SZ.json";
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DatedGlassbench {
     pub date: DateTime<Utc>,
-    pub glassbench: GlassBench,
+    pub bench: GlassBench,
 }
 
 impl DatedGlassbench {
 
-    pub(crate) fn new(glassbench: GlassBench) -> Self {
+    pub(crate) fn new(bench: GlassBench) -> Self {
         Self {
             date: Utc::now(),
-            glassbench,
+            bench,
         }
     }
 
@@ -68,7 +68,7 @@ impl DatedGlassbench {
     // instead of crashing ?
     pub fn save(self) {
         let now: DateTime<Utc> = Utc::now();
-        let dir = History::top_dir(&self.glassbench.id)
+        let dir = History::top_dir(&self.bench.id)
             .join(now.format("%Y%m").to_string());
         fs::create_dir_all(&dir).unwrap();
         let path = dir.join(now.format(FILENAME_DATE_FORMAT).to_string());

@@ -46,7 +46,7 @@ impl<'b> Report<'b> {
                     .set("mean-duration", format!("{:?}", mes.mean_duration()));
                 let diff = self.previous
                     .as_ref()
-                    .map(|dg| &dg.glassbench)
+                    .map(|dg| &dg.bench)
                     .and_then(|ogb| task.diff_with(ogb));
                 if let Some(diff) = diff {
                     sub.set_md(

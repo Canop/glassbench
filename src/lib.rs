@@ -14,6 +14,7 @@ mod black_box;
 mod command;
 mod dated_glassbench;
 mod error;
+mod git_info;
 mod glassbench;
 mod historic_measure;
 mod history;
@@ -36,6 +37,7 @@ pub use {
 };
 use {
     dated_glassbench::*,
+    git_info::*,
     historic_measure::*,
     history::*,
     printer::*,

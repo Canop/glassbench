@@ -46,7 +46,7 @@ impl History {
                         dgb
                     });
                 for dgb in dgbs {
-                    let mes = dgb.glassbench.tasks
+                    let mes = dgb.bench.tasks
                         .iter()
                         .find(|t| t.name == task_name)
                         .and_then(|t| t.measure);
