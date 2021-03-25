@@ -3,7 +3,8 @@
 #[derive(Debug, Clone)]
 pub struct Command {
     pub groups: Vec<String>,
-    pub graph: Option<String>
+    pub graph: Option<String>,
+    pub no_save: bool,
 }
 
 impl Command {
@@ -14,6 +15,7 @@ impl Command {
         let mut groups = Vec::new();
         let mut graph = None;
         let mut before_sep = true;
+        let mut no_save = false;
         while let Some(arg) = args.next() {
             if arg == "--" {
                 before_sep = false;
@@ -23,6 +25,9 @@ impl Command {
                 }
             } else {
                 match arg.as_str() {
+                    "--no-save" => {
+                        no_save = true;
+                    }
                     "--graph" => {
                         if let Some(val) = args.next() {
                             graph = Some(val);
@@ -40,6 +45,7 @@ impl Command {
         Self {
             groups,
             graph,
+            no_save,
         }
     }
 

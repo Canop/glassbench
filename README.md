@@ -146,6 +146,15 @@ Addition arguments are given after a second `--`. To graph a task, refer to it b
 cargo bench -- sort_numbers -- --graph 1
 ```
 
+## Other arguments
+
+`--no-save` just runs the benchmark, and compares with the previous saved execution, but doesn't save the result:
+
+```bash
+cargo bench -- -- --no-save
+```
+
+
 # History
 
 History is saved in the local `.glassbench` directory.

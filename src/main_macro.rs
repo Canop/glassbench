@@ -25,6 +25,8 @@ macro_rules! glassbench {
                 gb.print_report();
                 if let Some(graph_arg) = cmd.graph.as_ref() {
                     gb.graph(graph_arg);
+                } else if cmd.no_save {
+                    println!("no saving measures");
                 } else {
                     gb.save();
                 }
