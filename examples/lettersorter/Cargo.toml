@@ -1,0 +1,14 @@
+[package]
+name = "lettersorter"
+version = "0.1.0"
+authors = ["Canop <cano.petrole@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+
+[dev-dependencies]
+glassbench = { path = "../.." }
+
+[[bench]]
+name = "sort_numbers"
+harness = false
