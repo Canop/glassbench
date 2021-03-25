@@ -148,7 +148,7 @@ cargo bench -- sort_numbers -- --graph 1
 
 # History
 
-History is savec in the local `.glassbench` directory.
+History is saved in the local `.glassbench` directory.
 
 You should put its path in your vcs ignore list as measures can't be compared from one system to other ones.
 
