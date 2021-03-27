@@ -26,7 +26,21 @@ You get compact tables with the mean durations of all the tasks you defined:
 
 ![tbl](doc/intro-tbl.png)
 
-*(in the future iterations and total durations will only be shown in verbose mode)*
+*(in the future iterations and total durations will be shown only in verbose mode)*
+
+## Record every tests, with tags to help you compare strategies
+
+Read the whole history of your project's benchmarks, as everything is stored in sqlite3.
+
+
+```bash
+cargo bench -- -- --history 2
+```
+
+![history](doc/intro-history.png)
+
+When trying optimization strategies, or just anything which you suspect may impact performance, you may tag a bench execution with `--tag "your tag"`.
+Those tags are visible in the history.
 
 ## Graph the durations of a specific task over benchmarking sessions
 
@@ -38,13 +52,18 @@ The SVG graph for the third task of the "composite" group opens in your browser:
 
 ![tbl](doc/intro-svg.png)
 
-*(in the future the graph should be easier to zoom, show git commit hash, etc.)*
+*(in the future the graph should be easier to zoom, show tag and git commit hash, etc.)*
 
 # Usage
 
-## Prepare the benchmark
-
 The complete testable example is in `/examples/lettersorter`.
+
+## Add the dev-dependency
+
+[dev-dependencies]
+glassbench = "0.2"
+
+## Prepare the benchmark
 
 Your bench file, located in `/benches`, must have a task defining function and a `glassbench!` call.
 
@@ -72,7 +91,7 @@ static BIG_NUMBERS: &[&str] = &[
     "infinite",
 ];
 
-fn bench_number_sorting(gb: &mut GlassBench) {
+fn bench_number_sorting(gb: &mut Bench) {
     gb.task("small numbers", |b| {
         b.iter(|| {
             for n in SMALL_NUMBERS {
@@ -98,7 +117,9 @@ glassbench!(
 ```
 
 The callback you give to `b.iter` will be executed many times after an initial warming.
-If you have some preparation to do, do it before.
+
+If you have some preparation to do, do it before `b.iter`.
+
 To prevent your function to be optimized away by the compiler, pass the values you build to `pretend_used`.
 
 The bench must be defined in `Cargo.toml` with `harness = false`:
@@ -108,6 +129,18 @@ The bench must be defined in `Cargo.toml` with `harness = false`:
 name = "sort_numbers"
 harness = false
 ```
+
+## bench command overview
+
+The command has the following form:
+
+```bash
+cargo bench -- <optional list of benchs to run> -- <glassbench arguments>
+```
+
+The names of the benchs are the names of the bench files (see examples below).
+
+The glassbench arguments let you display the history or graph the records for a specific task, specify a tag, etc.
 
 ## Run all benchmarks
 
@@ -137,10 +170,26 @@ You could specify several benchmarks like this:
 cargo bench -- sort_numbers sort_colors sort_flowers
 ```
 
+## Banchmark with a tag
+
+Let's assume we're trying with notable conditions, maybe a genius strategy, then we may want to have this information in the history. We can do
+
+
+```bash
+cargo bench -- sort_numbers -- --tag "deep learning"
+```
+
+## Look at the history of a specific task
+
+You referer to a task by its number in the table:
+
+```bash
+cargo bench -- sort_numbers --history 1
+```
+
 ## Graph a task over executions
 
 Addition arguments are given after a second `--`. To graph a task, refer to it by its number in the table:
-
 
 ```bash
 cargo bench -- sort_numbers -- --graph 1
@@ -154,12 +203,15 @@ cargo bench -- sort_numbers -- --graph 1
 cargo bench -- -- --no-save
 ```
 
+# Read (or rewrite) the history with sqlite3
 
-# History
-
-History is saved in the local `.glassbench` directory.
+History is saved in the local `glassbench_v1.db` sqlite3 file.
 
 You should put its path in your vcs ignore list as measures can't be compared from one system to other ones.
+
+Using the [sqlite3 command line shell](https://sqlite.org/cli.html), you can run your own SQL queries:
+
+![sql](doc/sql.png)
 
 # Limits
 

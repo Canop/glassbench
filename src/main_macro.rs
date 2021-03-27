@@ -1,39 +1,82 @@
+use {
+    crate::*,
+};
 
 /// Generates a benchmark with a consistent id
-/// (using the benchmark file name), calling
+/// (using the benchmark file title), calling
 /// the benchmarking function given in argument.
 ///
 /// This generates the whole main function.
-/// If you want to se the id yourself, you can
-/// write the main yourself and call GlassBench::new
+/// If you want to set the bench name yourself
+/// (not recommanded), or change the way the launch
+/// arguments are used, you can write the main
+/// yourself and call create_bench and after_bench
 /// instead of using this macro.
 #[macro_export]
 macro_rules! glassbench {
     (
-        $name: literal,
+        $title: literal,
         $( $fun: path, )+
     ) => {
         pub fn main() {
             use glassbench::*;
-            let id = env!("CARGO_CRATE_NAME");
+            let name = env!("CARGO_CRATE_NAME");
             let cmd = Command::read();
-            if cmd.include_group(&id) {
-                let mut gb = glassbench::GlassBench::new(id, $name);
+            if cmd.include_bench(&name) {
+                let mut bench = create_bench(name, $title, &cmd);
                 $(
-                    $fun(&mut gb);
+                    $fun(&mut bench);
                 )+
-                gb.print_report();
-                if let Some(graph_arg) = cmd.graph.as_ref() {
-                    gb.graph(graph_arg);
-                } else if cmd.no_save {
-                    println!("not saving measures");
-                } else {
-                    gb.save();
+                if let Err(e) = after_bench(&mut bench, &cmd) {
+                    eprintln!("{}", e);
                 }
             } else {
-                println!("skipping bench {:?}", &id);
+                println!("skipping bench {:?}", &name);
             }
         }
     }
 }
 
+pub fn create_bench<S1, S2>(
+    name: S1,
+    title: S2,
+    cmd: &Command,
+) -> Bench
+where
+    S1: Into<String>,
+    S2: Into<String>,
+{
+    let mut bench = Bench::new(name, title);
+    bench.tag = cmd.tag.clone();
+    bench
+}
+
+pub fn after_bench(
+    bench: &mut Bench,
+    cmd: &Command,
+) -> Result<(), GlassBenchError> {
+    let printer = Printer::new();
+    let mut db = Db::open()?;
+    let previous = db.last_bench_named(&bench.name)?;
+    let report = Report::new(&bench, &previous);
+    report.print(&printer);
+    let mut no_save = cmd.no_save;
+    if let Some(graph_arg) = cmd.graph.as_ref() {
+        let history = bench.task_history(&mut db, graph_arg)?;
+        let graph = HistoryGraph::new(&history);
+        graph.open_in_browser()?;
+        no_save = true;
+    }
+    if let Some(tbl_arg) = cmd.history.as_ref() {
+        let history = bench.task_history(&mut db, tbl_arg)?;
+        let tbl = HistoryTbl::new(&history);
+        tbl.print(&printer);
+        no_save = true;
+    }
+    if no_save {
+        //println!("not saving new measures");
+    } else {
+        db.save_bench(&bench)?;
+    }
+    Ok(())
+}

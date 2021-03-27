@@ -11,36 +11,36 @@ See [README](https://github.com/Canop/glassbench) for an introduction.
 
 
 mod black_box;
+mod bench;
 mod command;
-mod dated_glassbench;
+mod db;
 mod error;
 mod git_info;
-mod glassbench;
-mod historic_measure;
-mod history;
+mod history_graph;
+mod history_tbl;
 mod main_macro;
 mod printer;
 mod report;
 mod skin;
 mod task_bench;
 mod task_bench_diff;
+mod task_history;
 mod task_measure;
 
 pub use {
+    db::*,
+    bench::*,
     black_box::*,
     command::*,
     error::*,
-    glassbench::*,
-    main_macro::*,
-    task_bench::*,
-    task_measure::*,
-};
-use {
-    dated_glassbench::*,
     git_info::*,
-    historic_measure::*,
-    history::*,
+    history_graph::*,
+    history_tbl::*,
+    main_macro::*,
     printer::*,
     report::*,
+    task_bench::*,
     task_bench_diff::*,
+    task_history::*,
+    task_measure::*,
 };

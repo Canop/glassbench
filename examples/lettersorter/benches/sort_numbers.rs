@@ -19,7 +19,7 @@ static BIG_NUMBERS: &[&str] = &[
     "infinite",
 ];
 
-fn bench_number_sorting(gb: &mut GlassBench) {
+fn bench_number_sorting(gb: &mut Bench) {
     gb.task("small numbers", |b| {
         b.iter(|| {
             for n in SMALL_NUMBERS {

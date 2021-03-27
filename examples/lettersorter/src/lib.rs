@@ -4,7 +4,7 @@ pub fn sort(s: &str) -> String {
     // let's build a string
     let mut s = s.to_string();
     // let's add a 0 because strings should be zero terminated, right ?
-    s.push_str("0");
+    //s.push_str("0");
     // now make a vector: it's easier to sort
     let mut chars: Vec<char> = s.chars().collect();
     // sort in place (so it's faaast!)
@@ -12,9 +12,9 @@ pub fn sort(s: &str) -> String {
     // make the string to return
     let mut s: String = chars.iter().collect();
     // wait, I've been told there should not be a zero, where is it ?
-    let zero_idx = s.find('0');
+    // let zero_idx = s.find('0');
     // remove it before somebody notices it
-    s.remove(zero_idx.unwrap());
+    //s.remove(zero_idx.unwrap());
     // well, it's done
     s
 }

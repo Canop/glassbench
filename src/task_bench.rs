@@ -1,6 +1,5 @@
 use {
     crate::*,
-    serde::{Serialize, Deserialize},
     std::{
         convert::TryInto,
         time::{Duration, Instant},
@@ -12,7 +11,9 @@ pub const ESTIMATE_ITERATIONS: u32 = 5;
 pub const OPTIMAL_DURATION_NS: u128 = Duration::from_secs(2).as_nanos();
 pub const MINIMAL_ITERATIONS: u32 = 50;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+
+/// benching of one task
+#[derive(Debug, Clone)]
 pub struct TaskBench {
     pub name: String,
     pub measure: Option<TaskMeasure>,
@@ -27,8 +28,8 @@ impl TaskBench {
         }
     }
 
-    pub(crate) fn diff_with(&self, old_glassbench: &GlassBench) -> Option<TaskBenchDiff> {
-        old_glassbench.tasks.iter()
+    pub(crate) fn diff_with(&self, old_bench: &Bench) -> Option<TaskBenchDiff> {
+        old_bench.tasks.iter()
             .find(|tb| tb.name == self.name)
             .and_then(|old_tb| old_tb.measure)
             .and_then(|old_mes| {

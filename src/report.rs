@@ -4,7 +4,10 @@ use {
 };
 
 static MD: &str = r#"
-# ${bench-name}
+# ${bench-title}
+${comparison
+comparison with ${previous-date} ${git-diff}
+}
 |-:|:-:|:-:|:-:|:-:
 |#|**task**|**iterations**|**total duration**|**mean duration**|**change**
 |-:|:-|-:|-:|-:|-:
@@ -14,28 +17,38 @@ ${tasks
 |-:
 "#;
 
-pub(crate) struct Report<'b> {
-    gb: &'b GlassBench,
-    previous: &'b Option<DatedGlassbench>,
+pub struct Report<'b> {
+    bench: &'b Bench,
+    previous: &'b Option<Bench>,
 }
 
 impl<'b> Report<'b> {
+
     pub fn new(
-        gb: &'b GlassBench,
-        previous: &'b Option<DatedGlassbench>,
+        bench: &'b Bench,
+        previous: &'b Option<Bench>,
     ) -> Self {
         Self {
-            gb,
+            bench,
             previous,
         }
     }
-    pub fn print(&self) {
-        let printer = Printer::new();
+
+    /// print the report to the console.
+    ///
+    /// You don't have to call this yourself if you use
+    /// the `glassbench!` macro.
+    pub fn print(&self, printer: &Printer) {
         let mut expander = OwningTemplateExpander::new();
         expander
-            .set("bench-id", &self.gb.id)
-            .set("bench-name", &self.gb.name);
-        for (idx, task) in self.gb.tasks.iter().enumerate() {
+            .set("bench-title", &self.bench.title)
+            .set("bench-name", &self.bench.name);
+        if let Some(previous) = self.previous.as_ref() {
+            expander.sub("comparison")
+                .set("previous-date", previous.time)
+                .set("git-diff", GitInfo::diff(&previous.git_info, &self.bench.git_info));
+        }
+        for (idx, task) in self.bench.tasks.iter().enumerate() {
             if let Some(mes) = &task.measure {
                 let sub = expander.sub("tasks");
                 sub
@@ -46,8 +59,7 @@ impl<'b> Report<'b> {
                     .set("mean-duration", format!("{:?}", mes.mean_duration()));
                 let diff = self.previous
                     .as_ref()
-                    .map(|dg| &dg.bench)
-                    .and_then(|ogb| task.diff_with(ogb));
+                    .and_then(|obench| task.diff_with(obench));
                 if let Some(diff) = diff {
                     sub.set_md(
                         "change",
