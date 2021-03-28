@@ -1,3 +1,7 @@
+<a name="v0.2.1"></a>
+### v0.2.1 - 2021-03-28
+- better documentation
+
 <a name="v0.2.0"></a>
 ### v0.2.0 - 2021-03-27
 - storage now based on sqlite3

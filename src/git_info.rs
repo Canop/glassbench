@@ -4,12 +4,17 @@ use {
     },
 };
 
+/// Git related information regarding the execution context
+///
+/// Right now it just contains the id of the head commit.
 #[derive(Debug, Clone)]
 pub struct GitInfo {
     pub commit_id: String,
 }
 
 impl GitInfo {
+
+    /// Read the current git state (if any)
     pub fn read() -> Option<Self> {
         std::env::current_dir().ok()
             .and_then(|dir| Repository::discover(dir).ok())
@@ -26,6 +31,8 @@ impl GitInfo {
                     })
             })
     }
+
+    /// Build a readable abstract of the diff of two [GitInfo]
     pub(crate) fn diff(old_gi: &Option<GitInfo>, new_gi: &Option<GitInfo>) -> String {
         match (old_gi, new_gi) {
             (Some(old_gi), Some(new_gi)) => {
@@ -44,4 +51,5 @@ impl GitInfo {
             }
         }
     }
+
 }

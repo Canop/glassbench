@@ -5,6 +5,7 @@ use {
     termimad::*,
 };
 
+/// A small helper to print using markdown templates
 pub struct Printer {
     pub skin: MadSkin,
     pub terminal_width: usize,

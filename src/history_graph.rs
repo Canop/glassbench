@@ -3,6 +3,7 @@ use {
     csv2svg::*,
 };
 
+/// A temporary structure for graphing a history
 pub struct HistoryGraph<'b> {
     history: &'b TaskHistory,
 }
@@ -17,7 +18,7 @@ impl<'b> HistoryGraph<'b> {
         }
     }
 
-    /// open the history as a SVG graph in the browser (hopefully)
+    /// Open the history as a SVG graph in the browser (hopefully)
     pub fn open_in_browser(&self) -> Result<(), GlassBenchError> {
         let h = &self.history;
         let mut times = Vec::new();

@@ -10,6 +10,7 @@ use {
     std::time::Duration,
 };
 
+/// version of the schema
 pub const VERSION: &str = "1";
 
 fn create_tables(con: &Connection) -> Result<(), GlassBenchError> {
@@ -39,13 +40,19 @@ fn create_tables(con: &Connection) -> Result<(), GlassBenchError> {
     Ok(())
 }
 
-/// Storage interface for Glassbench, wrapping a SQLite connection.
+/// Storage interface for Glassbench, wrapping a SQLite connection
+///
+/// All durations are stored as nanoseconds in i64:
+/// If the duration of a task exceeds a few centuries it can
+/// be assumed benchmarking it isn't really necessary.
 pub struct Db {
     pub con: Connection,
 }
 
 impl Db {
 
+    /// Create a new instance of DB, creating the sqlite file and
+    /// the tables if necessary
     pub fn open() -> Result<Self, GlassBenchError> {
         let path = std::env::current_dir()?
             .join(format!("glassbench_v{}.db", VERSION));
@@ -56,7 +63,7 @@ impl Db {
         })
     }
 
-    /// save a bench, with included tasks if any. Return the id of the bench
+    /// Save a bench, with included tasks if any. Return the id of the bench
     pub fn save_bench(&mut self, bench: &Bench) -> Result<i64, GlassBenchError> {
         self.con.execute(
             "INSERT INTO bench (time, name, title, tag, commit_id) VALUES (?1, ?2, ?3, ?4, ?5)",
@@ -93,6 +100,7 @@ impl Db {
         Ok(bench_id)
     }
 
+    /// Load the last bench having this name
     pub fn last_bench_named(
         &mut self,
         name: &str,
@@ -124,6 +132,7 @@ impl Db {
         }
     }
 
+    /// Load a [TaskHistory] with all measure for a bench name and task name
     pub fn task_history(
         &mut self,
         bench_name: &str,
@@ -183,7 +192,7 @@ fn parse_task(row: &Row<'_>) -> Result<TaskBench, rusqlite::Error> {
     })
 }
 
-/// parse a task_record from a row assuming those columns:
+/// Parse a task_record from a row assuming those columns:
 ///    bench.time, bench.tag, bench.commit_id,
 ///    task.iterations, task.total_duration_ns
 fn parse_task_record(row: &Row<'_>) -> Result<TaskRecord, rusqlite::Error> {

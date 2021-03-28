@@ -4,13 +4,21 @@ use {
 
 /// Generates a benchmark with a consistent id
 /// (using the benchmark file title), calling
-/// the benchmarking function given in argument.
+/// the benchmarking functions given in argument.
+///
+/// ```no-test
+/// glassbench!(
+///     "Sortings",
+///     bench_number_sorting,
+///     bench_alpha_sorting,
+/// );
+/// ```
 ///
 /// This generates the whole main function.
 /// If you want to set the bench name yourself
 /// (not recommanded), or change the way the launch
 /// arguments are used, you can write the main
-/// yourself and call create_bench and after_bench
+/// yourself and call [create_bench] and [after_bench]
 /// instead of using this macro.
 #[macro_export]
 macro_rules! glassbench {
@@ -37,6 +45,12 @@ macro_rules! glassbench {
     }
 }
 
+/// Create a bench with a user defined name (instead of
+/// the file name) and command (instead of the one read in
+/// arguments)
+///
+/// Unless you have special reasons, you should not
+/// use this function but the [glassbench!] function.
 pub fn create_bench<S1, S2>(
     name: S1,
     title: S2,
@@ -51,6 +65,12 @@ where
     bench
 }
 
+/// Print the tabular report for the executed benchmark
+/// then grap, list history, and or save according to
+/// command
+///
+/// Unless you have special reasons, you should not
+/// use this function but the [glassbench!] function.
 pub fn after_bench(
     bench: &mut Bench,
     cmd: &Command,
@@ -73,9 +93,7 @@ pub fn after_bench(
         tbl.print(&printer);
         no_save = true;
     }
-    if no_save {
-        //println!("not saving new measures");
-    } else {
+    if !no_save {
         db.save_bench(&bench)?;
     }
     Ok(())

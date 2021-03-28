@@ -2,6 +2,7 @@ use {
     crate::*,
 };
 
+/// Printable difference between two task measures
 pub struct TaskBenchDiff {
     pub percents: f64,
 }

@@ -1,5 +1,5 @@
 
-[![Latest Version][s1]][l1] [![MIT][s2]][l2] [![Chat on Miaou][s3]][l3]
+[![Latest Version][s1]][l1] [![docs][s3]][l3] [![Chat on Miaou][s4]][l4] [![MIT][s2]][l2]
 
 [s1]: https://img.shields.io/crates/v/glassbench.svg
 [l1]: https://crates.io/crates/glassbench
@@ -7,16 +7,17 @@
 [s2]: https://img.shields.io/badge/license-MIT-blue.svg
 [l2]: LICENSE
 
-[s3]: https://miaou.dystroy.org/static/shields/room.svg
-[l3]: https://miaou.dystroy.org/3768?rust
+[s3]: https://docs.rs/umask/badge.svg
+[l3]: https://docs.rs/umask/
 
-Glassbench is a micro-benchmark library to use with `cargo bench`.
+[s4]: https://miaou.dystroy.org/static/shields/room.svg
+[l4]: https://miaou.dystroy.org/3768?rust
 
-> :warning: **This is a very preliminary version.** Everything is expected to change (and get better). Unless proven otherwise Glassbench is still already usable and helpful in micro-optimization sessions. Discussion on chat are welcome.
+Glassbench is a micro-benchmark library with memory, to use with `cargo bench`.
 
 # Why
 
-## Run the benchmark and get a comparison with the previous execution
+## Run benchmarks and get a comparison with the previous execution
 
 ```bash
 cargo bench
@@ -42,17 +43,11 @@ cargo bench -- -- --history 2
 When trying optimization strategies, or just anything which you suspect may impact performance, you may tag a bench execution with `--tag "your tag"`.
 Those tags are visible in the history.
 
-## Graph the durations of a specific task over benchmarking sessions
+## Read or Edit benchmark history with SQL
 
-```bash
-cargo bench -- composite -- --graph 3
-```
+Using the [sqlite3 command line shell](https://sqlite.org/cli.html), you can run your own SQL queries:
 
-The SVG graph for the third task of the "composite" group opens in your browser:
-
-![tbl](doc/intro-svg.png)
-
-*(in the future the graph should be easier to zoom, show tag and git commit hash, etc.)*
+![sql](doc/sql.png)
 
 # Usage
 
@@ -60,8 +55,10 @@ The complete testable example is in `/examples/lettersorter`.
 
 ## Add the dev-dependency
 
+```TOML
 [dev-dependencies]
 glassbench = "0.2"
+```
 
 ## Prepare the benchmark
 
@@ -91,16 +88,16 @@ static BIG_NUMBERS: &[&str] = &[
     "infinite",
 ];
 
-fn bench_number_sorting(gb: &mut Bench) {
-    gb.task("small numbers", |b| {
-        b.iter(|| {
+fn bench_number_sorting(bench: &mut Bench) {
+    bench.task("small numbers", |task| {
+        task.iter(|| {
             for n in SMALL_NUMBERS {
                 pretend_used(sort(n));
             }
         });
     });
-    gb.task("big numbers", |b| {
-        b.iter(|| {
+    bench.task("big numbers", |task| {
+        task.iter(|| {
             for n in BIG_NUMBERS {
                 pretend_used(sort(n));
             }
@@ -195,6 +192,10 @@ Addition arguments are given after a second `--`. To graph a task, refer to it b
 cargo bench -- sort_numbers -- --graph 1
 ```
 
+This opens in your browser a graph of the durations in nanosecods of the first (`1`) task of the "sort_numbers" bench.
+
+*(note: the graph is a work in progress and should be improved in the future)*
+
 ## Other arguments
 
 `--no-save` just runs the benchmark, and compares with the previous saved execution, but doesn't save the result:
@@ -209,9 +210,11 @@ History is saved in the local `glassbench_v1.db` sqlite3 file.
 
 You should put its path in your vcs ignore list as measures can't be compared from one system to other ones.
 
-Using the [sqlite3 command line shell](https://sqlite.org/cli.html), you can run your own SQL queries:
+To enter an interactive SQL session, do
 
-![sql](doc/sql.png)
+```bash
+sqlite3 glassbench_v1.db
+```
 
 # Limits
 

@@ -14,6 +14,8 @@ ${records
 |-:
 "#;
 
+/// A temporary structure for printing as table a
+/// history in standard output
 pub struct HistoryTbl<'b> {
     history: &'b TaskHistory,
 }
@@ -28,7 +30,7 @@ impl<'b> HistoryTbl<'b> {
         }
     }
 
-    /// print the history to the console.
+    /// Print the history to the console
     pub fn print(&self, printer: &Printer) {
         let h = &self.history;
         let mut expander = OwningTemplateExpander::new();

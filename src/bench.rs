@@ -4,7 +4,7 @@ use {
 };
 
 
-/// A whole benchmark.
+/// A whole benchmark
 ///
 /// You normally create it with the `glassbench!`
 /// macro which will manage table rendering, saving
@@ -21,12 +21,10 @@ pub struct Bench {
 
 impl Bench {
 
-    /// Create a benchmark with a specific name
-    /// and title.
+    /// Create a benchmark with a specific name and title
     ///
-    /// You normally create it with the `glassbench!`
-    /// macro which will fetch the id in the name of
-    /// the executed benchmark.
+    /// You normally create don't use this function but the `glassbench!`
+    /// macro which will fetch the id in the name of the executed benchmark.
     pub fn new<S1, S2>(name: S1, title: S2) -> Self
     where
         S1: Into<String>,
@@ -42,7 +40,30 @@ impl Bench {
         }
     }
 
-    /// Specify a task to benchmark.
+    /// Specify a task to benchmark
+    ///
+    /// Example:
+    ///
+    /// ```
+    /// # use glassbench::*;
+    /// # struct BigComputer {}
+    /// # impl BigComputer {
+    /// #     pub fn new() -> Self {
+    /// #         Self {}
+    /// #     }
+    /// #     pub fn answer(&self, q: usize) -> usize {
+    /// #         q + 2
+    /// #     }
+    /// # }
+    /// # let mut bench = Bench::new("doc", "Doc Example");
+    /// bench.task("answer 42", |task| {
+    ///     let computer = BigComputer::new();
+    ///     let question = 42;
+    ///     task.iter(|| {
+    ///         pretend_used(computer.answer(question));
+    ///     });
+    /// });
+    /// ```
     pub fn task<S: Into<String>, F>(&mut self, name: S, mut f: F)
     where
         F: FnMut(&mut TaskBench),
@@ -52,7 +73,7 @@ impl Bench {
         self.tasks.push(b);
     }
 
-    /// this API will change
+    // this API will change
     fn task_name_from_arg(&self, arg: &str) -> Option<&str> {
         arg.parse::<usize>().ok()
             .and_then(|num| {
@@ -66,10 +87,9 @@ impl Bench {
             .map(|task| task.name.as_str())
     }
 
-    /// load the history of a task from DB.
+    /// load the history of a task from DB
     ///
-    /// You don't have to call this yourself if you use
-    /// the `glassbench!` macro.
+    /// You don't have to call this yourself if you use the [glassbench!] macro.
     pub fn task_history(
         &self,
         db: &mut Db,
@@ -81,7 +101,6 @@ impl Bench {
             Err(GlassBenchError::ClientError)
         }
     }
-
 
 }
 

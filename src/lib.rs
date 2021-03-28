@@ -2,10 +2,16 @@
 
 A micro-benchmarking crate with memory.
 
-Preliminary version.
+See [usage and example in README](https://github.com/Canop/glassbench#usage).
 
-See [README](https://github.com/Canop/glassbench) for an introduction.
+In a standard setup you'll only use
 
+* the [glassbench!] macro which let you title your bench and add functions defining tasks
+* the [Bench] struct, as argument of your global bench function, with its [Bench::task] function to define a task
+* the [TaskBench] struct that you receive as argument when defining a task. You'll call
+[TaskBench::iter] with the callback to benchmark
+* [pretend_used] as an opaque sinkhole, which can receive the values you produce in your tests and
+prevent the optimizer to remove their construction
 
 */
 

@@ -19,16 +19,16 @@ static BIG_NUMBERS: &[&str] = &[
     "infinite",
 ];
 
-fn bench_number_sorting(gb: &mut Bench) {
-    gb.task("small numbers", |b| {
-        b.iter(|| {
+fn bench_number_sorting(bench: &mut Bench) {
+    bench.task("small numbers", |task| {
+        task.iter(|| {
             for n in SMALL_NUMBERS {
                 pretend_used(sort(n));
             }
         });
     });
-    gb.task("big numbers", |b| {
-        b.iter(|| {
+    bench.task("big numbers", |task| {
+        task.iter(|| {
             for n in BIG_NUMBERS {
                 pretend_used(sort(n));
             }

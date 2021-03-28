@@ -17,6 +17,7 @@ ${tasks
 |-:
 "#;
 
+/// A temporary structure to print the result of a benchmark to the console
 pub struct Report<'b> {
     bench: &'b Bench,
     previous: &'b Option<Bench>,
@@ -34,7 +35,7 @@ impl<'b> Report<'b> {
         }
     }
 
-    /// print the report to the console.
+    /// Print the report to the console
     ///
     /// You don't have to call this yourself if you use
     /// the `glassbench!` macro.

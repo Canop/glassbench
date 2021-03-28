@@ -1,5 +1,5 @@
 
-
+/// What the user asked at the cli
 #[derive(Debug, Clone)]
 pub struct Command {
     pub benches: Vec<String>,
@@ -12,6 +12,7 @@ pub struct Command {
 
 impl Command {
 
+    /// read std::env::args
     pub fn read() -> Self {
         let mut args = std::env::args()
             .skip(1); // it's the path to the compiled bench in target
@@ -71,8 +72,9 @@ impl Command {
         }
     }
 
-    pub fn include_bench(&self, id: &str) -> bool {
-        self.benches.is_empty() || self.benches.iter().any(|g| g==id)
+    /// tell whether this specific bench should be included
+    pub fn include_bench(&self, name: &str) -> bool {
+        self.benches.is_empty() || self.benches.iter().any(|g| g==name)
     }
 
 }
