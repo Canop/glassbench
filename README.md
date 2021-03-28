@@ -1,4 +1,3 @@
-
 [![Latest Version][s1]][l1] [![docs][s3]][l3] [![Chat on Miaou][s4]][l4] [![MIT][s2]][l2]
 
 [s1]: https://img.shields.io/crates/v/glassbench.svg
@@ -7,8 +6,8 @@
 [s2]: https://img.shields.io/badge/license-MIT-blue.svg
 [l2]: LICENSE
 
-[s3]: https://docs.rs/umask/badge.svg
-[l3]: https://docs.rs/umask/
+[s3]: https://docs.rs/glassbench/badge.svg
+[l3]: https://docs.rs/glassbench/
 
 [s4]: https://miaou.dystroy.org/static/shields/room.svg
 [l4]: https://miaou.dystroy.org/3768?rust
@@ -31,7 +30,7 @@ You get compact tables with the mean durations of all the tasks you defined:
 
 ## Record every tests, with tags to help you compare strategies
 
-Read the whole history of your project's benchmarks, as everything is stored in sqlite3.
+Read the whole history of your project's benchmarks, as everything is stored in SQLite.
 
 
 ```bash
@@ -127,7 +126,7 @@ name = "sort_numbers"
 harness = false
 ```
 
-## bench command overview
+## Bench command overview
 
 The command has the following form:
 
@@ -167,10 +166,9 @@ You could specify several benchmarks like this:
 cargo bench -- sort_numbers sort_colors sort_flowers
 ```
 
-## Banchmark with a tag
+## Benchmark with a tag
 
 Let's assume we're trying with notable conditions, maybe a genius strategy, then we may want to have this information in the history. We can do
-
 
 ```bash
 cargo bench -- sort_numbers -- --tag "deep learning"
@@ -204,7 +202,7 @@ This opens in your browser a graph of the durations in nanosecods of the first (
 cargo bench -- -- --no-save
 ```
 
-# Read (or rewrite) the history with sqlite3
+# Read (or rewrite) the history with SQLite
 
 History is saved in the local `glassbench_v1.db` sqlite3 file.
 
@@ -215,6 +213,8 @@ To enter an interactive SQL session, do
 ```bash
 sqlite3 glassbench_v1.db
 ```
+
+Besides SQL queries, you might find useful `.schema`, which shows you the tables, and `.quit`.
 
 # Limits
 

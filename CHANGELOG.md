@@ -1,3 +1,7 @@
+<a name="v0.2.2"></a>
+### v0.2.2 - 2021-03-28
+- documentation improvements
+
 <a name="v0.2.1"></a>
 ### v0.2.1 - 2021-03-28
 - better documentation

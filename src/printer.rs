@@ -12,6 +12,10 @@ pub struct Printer {
 }
 
 impl Printer {
+    /// create a new printer
+    ///
+    /// The skin will be without style and color if the
+    /// output is piped.
     pub fn new() -> Self {
         let terminal_width = terminal_size().0 as usize;
         let color = !is_output_piped();
