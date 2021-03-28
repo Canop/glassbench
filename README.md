@@ -176,7 +176,7 @@ cargo bench -- sort_numbers -- --tag "deep learning"
 
 ## Look at the history of a specific task
 
-You referer to a task by its number in the table:
+You refer to a task by its number in the table:
 
 ```bash
 cargo bench -- sort_numbers --history 1
@@ -190,7 +190,7 @@ Addition arguments are given after a second `--`. To graph a task, refer to it b
 cargo bench -- sort_numbers -- --graph 1
 ```
 
-This opens in your browser a graph of the durations in nanosecods of the first (`1`) task of the "sort_numbers" bench.
+This opens in your browser a graph of the durations in nanoseconds of the first (`1`) task of the "sort_numbers" bench.
 
 *(note: the graph is a work in progress and should be improved in the future)*
 
@@ -218,9 +218,9 @@ Besides SQL queries, you might find useful `.schema`, which shows you the tables
 
 # Limits
 
-Glassbench measures the time really taken by your functions. It's the time which matters for your users but it's extremly sensible to the load of your system and can't be compared from one computer to another one.
+Glassbench measures the time really taken by your functions. It's the time which matters for your users but it's extremely sensible to the load of your system and can't be compared from one computer to another one.
 
-You must be cautious when looking at the history. Changes may be related to more than just your code efficiency: even if you didn't change the task, there may have been change in your system load or efficiency.
+You must be cautious when looking at the history. Changes may be related to more than just your code efficiency: even if you didn't change the task, there may have been changes in your system load or efficiency.
 
 # Alternatives
 
