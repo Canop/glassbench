@@ -66,7 +66,7 @@ where
 }
 
 /// Print the tabular report for the executed benchmark
-/// then grap, list history, and or save according to
+/// then graph, list history, and or save according to
 /// command
 ///
 /// Unless you have special reasons, you should not
@@ -82,9 +82,9 @@ pub fn after_bench(
     report.print(&printer);
     let mut no_save = cmd.no_save;
     if let Some(graph_arg) = cmd.graph.as_ref() {
-        let history = bench.task_history(&mut db, graph_arg)?;
-        let graph = HistoryGraph::new(&history);
-        graph.open_in_browser()?;
+        let task_name = bench.task_name_from_arg(graph_arg);
+        let viewer = HtmlViewer::new(&bench.name, task_name);
+        viewer.open_in_browser()?;
         no_save = true;
     }
     if let Some(tbl_arg) = cmd.history.as_ref() {

@@ -24,6 +24,7 @@ mod error;
 mod git_info;
 mod history_graph;
 mod history_tbl;
+mod html_viewer;
 mod main_macro;
 mod printer;
 mod report;
@@ -42,6 +43,7 @@ pub use {
     git_info::*,
     history_graph::*,
     history_tbl::*,
+    html_viewer::*,
     main_macro::*,
     printer::*,
     report::*,

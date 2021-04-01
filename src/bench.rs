@@ -73,8 +73,8 @@ impl Bench {
         self.tasks.push(b);
     }
 
-    // this API will change
-    fn task_name_from_arg(&self, arg: &str) -> Option<&str> {
+    /// Warning: this API is considered unstable
+    pub fn task_name_from_arg(&self, arg: &str) -> Option<&str> {
         arg.parse::<usize>().ok()
             .and_then(|num| {
                 if num == 0 {

@@ -7,7 +7,10 @@ use {
         OptionalExtension,
         Row,
     },
-    std::time::Duration,
+    std::{
+        path::PathBuf,
+        time::Duration,
+    },
 };
 
 /// version of the schema
@@ -51,12 +54,17 @@ pub struct Db {
 
 impl Db {
 
+    /// return the name of the glassbench database file
+    pub fn path() -> Result<PathBuf, GlassBenchError> {
+        Ok(
+            std::env::current_dir()?.join(format!("glassbench_v{}.db", VERSION))
+        )
+    }
+
     /// Create a new instance of DB, creating the sqlite file and
     /// the tables if necessary
     pub fn open() -> Result<Self, GlassBenchError> {
-        let path = std::env::current_dir()?
-            .join(format!("glassbench_v{}.db", VERSION));
-        let con = Connection::open(path)?;
+        let con = Connection::open(Self::path()?)?;
         create_tables(&con)?;
         Ok(Db {
             con,

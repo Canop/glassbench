@@ -9,4 +9,6 @@ pub enum GlassBenchError {
     SQLite(#[from] rusqlite::Error),
     #[error("User query not understood")]
     ClientError,
+    #[error("JSON error: {0}")]
+    Json(#[from] serde_json::Error),
 }
