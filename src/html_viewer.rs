@@ -16,6 +16,7 @@ pub const SQL_WASM: &[u8] = include_bytes!("../rsc/sql-wasm.wasm");
 pub const VIEWER_JS: &str = include_str!("../rsc/viewer.js");
 pub const VIEWER_CSS: &str = include_str!("../rsc/viewer.css");
 
+/// configuration sent to the html page in JSON
 #[derive(Debug, Serialize)]
 struct Conf<'b> {
     bench_name: &'b str,
@@ -23,6 +24,7 @@ struct Conf<'b> {
     gb_version: String,
 }
 
+/// The builder of the HTML standalone viewer
 pub struct HtmlViewer<'b> {
     conf: Conf<'b>,
 }

@@ -3,7 +3,6 @@ use {
     chrono::prelude::*,
 };
 
-
 /// A whole benchmark
 ///
 /// You normally create it with the `glassbench!`

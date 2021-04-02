@@ -24,9 +24,9 @@ function create_gui() {
 		)
 	)
 	function unselect() {
-		for (e of $("#view .tabs .tab, #view .pages .page")) {
+		$("#view .tabs .tab, #view .pages .page", e => {
 			e.classList.remove("selected")
-		}
+		})
 	}
 	;["Table", "Graph"].forEach(name => {
 		unselect()
@@ -59,9 +59,7 @@ function create_gui() {
 			)
 		)
 	)
-	$("#Graph",
-		$("<div", { id: "vis" })
-	)
+	$("#Graph", $("<#vis"))
 }
 
 function update_view() {

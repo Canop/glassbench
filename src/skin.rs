@@ -4,6 +4,7 @@ use {
     termimad::*,
 };
 
+/// crate the skin used for terminal display using Termimad
 pub fn make_skin(color: bool) -> MadSkin {
     if color {
         make_color_skin()
