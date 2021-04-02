@@ -42,6 +42,24 @@ cargo bench -- -- --history 2
 When trying optimization strategies, or just anything which you suspect may impact performance, you may tag a bench execution with `--tag "your tag"`.
 Those tags are visible in the history.
 
+## Graph your various tests, filtering on tags
+
+```bash
+cargo bench -- my_task -- --graph 2
+```
+
+The viewer, with tabular and graphical views, opens in your browser:
+
+![graph](doc/intro-viewer-graph.png)
+
+The graph can be zoomed with the mouse wheel and moved with the mouse.
+
+You can read the precise data in a table too:
+
+![table](doc/intro-viewer-table.png)
+
+Everything is embedded in a standalone HTML page, there's no process running. The page can even be sent or hosted.
+
 ## Read or Edit benchmark history with SQL
 
 Using the [sqlite3 command line shell](https://sqlite.org/cli.html), you can run your own SQL queries:

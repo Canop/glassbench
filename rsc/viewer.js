@@ -136,7 +136,6 @@ function update_table(view_data) {
 				$("<td.duration_str", { textContent: row.duration_str }),
 				$("<td.duration_ns", { textContent: row.duration_ns }),
 				$("<td.tag", { textContent: row.tag }),
-
 			))
 		}
 	}
@@ -261,26 +260,15 @@ function fmt_nanos(nanos) {
 	if (nanos < 1000) {
 		return nanos + "ns"
 	}
+	const num = n => n > 999 ? Math.round(n) : n.toFixed(2)
 	let micros = nanos / 1000
 	if (micros < 1000) {
-		if (micros > 999) {
-			return Math.round(micros) + "µs"
-		} else {
-			return micros.toFixed(2) + "µs"
-		}
+		return num(micros) + "µs"
 	}
 	let millis = micros / 1000
 	if (millis < 1000) {
-		if (millis > 999) {
-			return Math.round(millis) + "ms"
-		} else {
-			return millis.toFixed(2) + "ms"
-		}
+		return num(millis) + "ms"
 	}
 	let seconds = millis / 1000
-	if (seconds > 999) {
-		return Math.round(seconds) + "s"
-	} else {
-		return seconds.toFixed(2) + "s"
-	}
+	return num(seconds) + "s"
 }
