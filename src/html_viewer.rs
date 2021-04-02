@@ -8,21 +8,19 @@ use {
     },
 };
 
-pub const VIEWER_JS: &str = include_str!("../rsc/viewer.js");
-pub const VIEWER_CSS: &str = include_str!("../rsc/viewer.css");
+pub const DOLL_JS: &str = include_str!("../rsc/dom-doll.js");
 pub const VIS_JS: &str = include_str!("../rsc/vis-timeline-graph2d.min.js");
 pub const VIS_CSS: &str = include_str!("../rsc/vis-timeline-graph2d.min.css");
-
 pub const SQL_JS: &str = include_str!("../rsc/sql-wasm.js");
 pub const SQL_WASM: &[u8] = include_bytes!("../rsc/sql-wasm.wasm");
-
-//pub const SQL_JS_URL: &str = "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.5.0/sql-wasm.js";
-//pub const SQL_WASM_URL: &str = "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.5.0/sql-wasm.wasm";
+pub const VIEWER_JS: &str = include_str!("../rsc/viewer.js");
+pub const VIEWER_CSS: &str = include_str!("../rsc/viewer.css");
 
 #[derive(Debug, Serialize)]
 struct Conf<'b> {
     bench_name: &'b str,
     task_name: Option<&'b str>,
+    gb_version: String,
 }
 
 pub struct HtmlViewer<'b> {
@@ -36,6 +34,7 @@ impl<'b> HtmlViewer<'b> {
             conf: Conf {
                 bench_name,
                 task_name,
+                gb_version: env!("CARGO_PKG_VERSION").to_string(),
             },
         }
     }
@@ -56,6 +55,7 @@ impl<'b> HtmlViewer<'b> {
         writeln!(w, "<style type=text/css>{}</style>", VIS_CSS)?;
         writeln!(w, "<script>{}</script>", VIS_JS)?;
         writeln!(w, "<script>{}</script>", SQL_JS)?;
+        writeln!(w, "<script>{}</script>", DOLL_JS)?;
         writeln!(w, "<script charset=UTF-8>{}</script>", VIEWER_JS)?;
         write_db(&mut w)?;
         writeln!(w, "</head>")?;

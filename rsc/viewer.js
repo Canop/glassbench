@@ -11,20 +11,26 @@ async function main(sql_conf){
 
 function create_gui() {
 	$("body",
-		$("<div", { id: "selectors" }),
-		$("<div", { id: "view" },
-			$("<div.tabs"),
-			$("<div.pages")
+		$("<#infos",
+			$(`<a>Glassbench ${gb_conf.gb_version}`, {
+				href: "https://github.com/Canop/glassbench",
+				target: "_blank",
+			}),
+		),
+		$("<#selectors"),
+		$("<#view",
+			$("<.tabs"),
+			$("<.pages"),
 		)
 	)
 	function unselect() {
-		for (e of $("#view .tabs .tab, #view .pages .page")) e.classList.remove("selected")
+		for (e of $("#view .tabs .tab, #view .pages .page")) {
+			e.classList.remove("selected")
+		}
 	}
 	;["Table", "Graph"].forEach(name => {
 		unselect()
-		let page = $("<div.page.selected", {
-			id: name
-		})
+		let page = $("<.page.selected", { id: name })
 		let tab = $("<span.tab.selected", {
 			textContent: name,
 			click: () => {
@@ -37,19 +43,19 @@ function create_gui() {
 		$("#view .pages", page)
 	})
 	$("#Table",
-		$("<div.table-wrapper",
+		$("<.table-wrapper",
 			$("<table",
 				$("<thead", $("<tr",
-					$("<th.group", { textContent: "dataset" }),
-					$("<th.bench_id", { textContent: "bench id" }),
-					$("<th.commit_id", { textContent: "commit id" }),
-					$("<th.date", { textContent: "date" }),
-					$("<th.task_name", { textContent: "task name" }),
-					$("<th.duration_str", { textContent: "mean dur." }),
-					$("<th.duration_ns", { textContent: "mean (ns)" }),
-					$("<th.tag", { textContent: "tag" }),
+					$("<th.group>dataset"),
+					$("<th.bench_id>bench id"),
+					$("<th.commit_id>commit id"),
+					$("<th.date>date"),
+					$("<th.task_name>task name"),
+					$("<th.duration_str>mean dur."),
+					$("<th.duration_ns>mean (ns)"),
+					$("<th.tag>tag"),
 				)),
-				$("<tbody", { id: "tbody" })
+				$("<tbody#tbody")
 			)
 		)
 	)
@@ -100,9 +106,9 @@ function get_rows(bench_name, task_name, include_tag, tag) {
 	let args = [bench_name, task_name]
 	if (tag) {
 		if (include_tag) {
-			sql += " AND (tag IS NULL OR tag NOT LIKE ?)"
-		} else {
 			sql += " AND tag LIKE ?"
+		} else {
+			sql += " AND (tag IS NULL OR tag NOT LIKE ?)"
 		}
 		args.push(`%${tag}%`)
 	}
@@ -122,7 +128,7 @@ function update_table(view_data) {
 	for (let g of view_data) {
 		for (let row of g.rows) {
 			$(tbody, $(`<tr.group_${g.group_id}`,
-				$("<td.group_id", { textContent: g.group_id + 1 }), // counting from 1
+				$(`<td.group_id>${g.group_id + 1}`), // counting from 1
 				$("<td.bench_id", { textContent: row.bench_id }),
 				$("<td.commit_id", { textContent: row.commit_id.slice(0, 10) }),
 				$("<td.date", { textContent: new Date(row.date) }),
@@ -172,14 +178,13 @@ function update_graph(view_data) {
 function make_selector(bench_name, task_name) {
 	let bench_name_select = $("<select.bench",
 		{ change: update_task_name_select },
-		gb.bench_names.map(bn => $("<option", { textContent: bn }))
+		gb.bench_names.map(bn => $(`<option>${bn}`))
 	)
 	if (bench_name) {
 		let idx = gb.bench_names.indexOf(bench_name)
 		if (idx >= 0) bench_name_select.selectedIndex = idx
 	}
-	let task_name_select = $("<select.task",
-		{ change: update_view })
+	let task_name_select = $("<select.task", { change: update_view })
 	function update_task_name_select(){
 		let bench_name = bench_name_select.value
 		console.log('bench_name:', bench_name);
@@ -190,9 +195,7 @@ function make_selector(bench_name, task_name) {
 				{ $bench_id: bench_id }
 			)
 		task_name_select.innerHTML = ""
-		$(task_name_select,
-			task_names.map(name => $("<option", { textContent: name }))
-		)
+		$(task_name_select, task_names.map(name => $(`<option>${name}`)))
 		return task_names
 	}
 	let tag_input = $("<input.tag", {
@@ -204,35 +207,25 @@ function make_selector(bench_name, task_name) {
 		let idx = task_names.indexOf(task_name)
 		if (idx >= 0) task_name_select.selectedIndex = idx
 	}
-	let wrapper = $("<div.selector-wrapper",
-		$("<div.selector",
-			$("<label",
-				{ textContent: "bench:" },
-				bench_name_select
-			),
-			$("<label",
-				{ textContent: "task:" },
-				task_name_select
-			),
+	let wrapper = $("<.selector-wrapper",
+		$("<.selector",
+			$("<label>bench:", bench_name_select),
+			$("<label>task:", task_name_select),
 			$("<select.tag-toggle", { change: update_view },
-				$("<option", { textContent: "with tag" }),
-				$("<option", { textContent: "without tag" }),
+				$("<option>with tag"),
+				$("<option>without tag"),
 			),
 			tag_input,
-			$("<div.legend-icon"),
-			$("<button.remover", {
-				textContent: '-',
+			$("<.legend-icon"),
+			$("<button.remover>-", {
 				click: () => {
 					wrapper.remove()
 					update_view()
 				}
 			})
 		),
-		$("<div.adder",
-			$("<button", {
-				textContent: '+',
-				click: make_selector
-			})
+		$("<.adder",
+			$("<button>+", { click: make_selector })
 		)
 	)
 	$("#selectors", wrapper)
@@ -263,54 +256,6 @@ function base64ToArrayBuffer(base64) {
 	}
 	return bytes.buffer
 }
-
-function $() { // DOM manipulation helper
-	var nodes
-	for (let arg of arguments) {
-		if (typeof arg == "string") {
-			let parents = nodes || [document]
-			nodes = []
-			for (let parent of parents) {
-				if (arg[0]=='<') {
-					if (arg.endsWith('>')) arg = arg.slice(0, -1)
-					let [tag, ...classes] = arg.slice(1).split('.')
-					let e = document.createElement(tag)
-					for (let c of classes) e.classList.add(c)
-					if (parent != document) {
-						parent.appendChild(e)
-					}
-					nodes.push(e)
-				} else {
-					for (let child of parent.querySelectorAll(arg)) {
-						nodes.push(child)
-					}
-				}
-			}
-		} else if (arg instanceof Element) {
-			if (nodes) nodes[0].appendChild(arg)
-			else nodes = [arg]
-		} else if (Array.isArray(arg)) {
-			for (let e of arg) {
-				nodes[0].appendChild(e)
-			}
-		} else if (typeof arg == "object") {
-			for (let e of nodes) {
-				for (let attr in arg) {
-					let val = arg[attr]
-					if (typeof val == "function") {
-						e.addEventListener(attr, val)
-					} else if (["textContent", "innerHTML"].includes(attr)) {
-						e[attr] = val
-					} else {
-						e.setAttribute(attr, val)
-					}
-				}
-			}
-		}
-	}
-	return (nodes && nodes.length==1) ? nodes[0] : nodes
-}
-const $$ = document.querySelectorAll.bind(document)
 
 function fmt_nanos(nanos) {
 	if (nanos < 1000) {

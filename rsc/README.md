@@ -4,3 +4,5 @@ The files of this directory are directly embedded in the temporary HTML file you
 `sql-*` files come from https://github.com/sql-js/sql.js (MIT license) and provide SQLite3 querying capabilities.
 
 `vis-*` files come from https://visjs.org/ (dual-licensed under Apache-2.0 and MIT) and provide the grapher.
+
+`dom-doll.js` comes from https://github.com/Canop/dom-doll (MIT license) and is an HTML DOM utility.
