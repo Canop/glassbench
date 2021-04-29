@@ -74,7 +74,7 @@ The complete testable example is in `/examples/lettersorter`.
 
 ```TOML
 [dev-dependencies]
-glassbench = "0.2"
+glassbench = "0.3"
 ```
 
 ## Prepare the benchmark
