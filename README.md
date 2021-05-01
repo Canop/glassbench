@@ -66,6 +66,10 @@ Using the [sqlite3 command line shell](https://sqlite.org/cli.html), you can run
 
 ![sql](doc/sql.png)
 
+You may remove the benchmarks of a period if you like, change tags a posteriori, etc.
+
+If you want to get rid of the whole histoyr, you can simply delete the `glassbench_v1.db` file.
+
 # Usage
 
 The complete testable example is in `/examples/lettersorter`.
