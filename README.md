@@ -39,10 +39,23 @@ cargo bench -- -- --history 2
 
 ![history](doc/intro-history.png)
 
-When trying optimization strategies, or just anything which you suspect may impact performance, you may tag a bench execution with `--tag "your tag"`.
-Those tags are visible in the history.
+When trying optimization strategies, or just anything which you suspect may impact performance, you may tag a bench execution:
+
+```bash
+cargo bench -- -- --tag "no zero"
+```
 
 ## Graph your various tests, filtering on tags
+
+Open the grapher:
+
+```bash
+cargo bench -- -- --graph
+```
+
+(yes, there are two `--` before `--graph`)
+
+Graph a specific task:
 
 ```bash
 cargo bench -- my_task -- --graph 2

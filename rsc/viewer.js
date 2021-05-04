@@ -1,8 +1,8 @@
 
 async function main(sql_conf){
-	let db_bytes = base64ToArrayBuffer(db64)
+	let db_bytes = base64ToUint8Array(db64)
 	const SQL = await initSqlJs(sql_conf)
-	const db = new SQL.Database(new Uint8Array(db_bytes))
+	const db = new SQL.Database(db_bytes)
 	let benches = db.exec("SELECT * FROM bench")
 	window.gb = wrap(db)
 	create_gui()
@@ -244,14 +244,14 @@ function wrap(db) {
 	return gb
 }
 
-function base64ToArrayBuffer(base64) {
+function base64ToUint8Array(base64) {
 	var binary_string = window.atob(base64)
 	var len = binary_string.length
 	var bytes = new Uint8Array(len)
 	for (var i = 0; i < len; i++) {
 		bytes[i] = binary_string.charCodeAt(i)
 	}
-	return bytes.buffer
+	return bytes
 }
 
 function fmt_nanos(nanos) {
