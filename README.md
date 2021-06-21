@@ -26,8 +26,6 @@ You get compact tables with the mean durations of all the tasks you defined:
 
 ![tbl](doc/intro-tbl.png)
 
-*(in the future iterations and total durations will be shown only in verbose mode)*
-
 ## Record every tests, with tags to help you compare strategies
 
 Read the whole history of your project's benchmarks, as everything is stored in SQLite.
@@ -159,6 +157,12 @@ The bench must be defined in `Cargo.toml` with `harness = false`:
 [[bench]]
 name = "sort_numbers"
 harness = false
+```
+
+Until you finished preparing your benchmark, you probably don't want to save the results so you'll run glassbench with
+
+```bash
+cargo bench -- -- --no-save
 ```
 
 ## Bench command overview
