@@ -1,6 +1,6 @@
 [package]
 name = "glassbench"
-version = "0.3.0"
+version = "0.3.1"
 authors = ["dystroy <denys.seguret@gmail.com>"]
 repository = "https://github.com/Canop/glassbench"
 description = "rust benchmark with memory"
@@ -13,7 +13,7 @@ categories = ["development-tools", "development-tools::profiling"]
 base64 = "0.13"
 chrono = { version = "0.4", features = ["serde"] }
 crossterm = "0.19.0"
-csv2svg = "0.1"
+csv2svg = "0.1.6"
 git2 = { version="0.13", default-features=false }
 lazy_static = "1.4"
 minimad = "0.7.0"
