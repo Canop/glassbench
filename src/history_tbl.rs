@@ -1,6 +1,6 @@
 use {
     crate::*,
-    minimad::OwningTemplateExpander,
+    termimad::minimad::OwningTemplateExpander,
 };
 
 static MD: &str = r#"

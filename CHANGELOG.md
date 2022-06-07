@@ -1,3 +1,12 @@
+
+<a name="v0.3.2"></a>
+### v0.3.2 - 2022-07-07
+- upgrade git2 dependency due to compilation problem (again - please somebody write a pure rust git repository handling crate)
+
+<a name="v0.3.1"></a>
+### v0.3.1 - 2021-03-12
+- upgrade git2 dependency due to compilation problem with a minor 0.13 version
+
 <a name="v0.3.0"></a>
 ### v0.3.0 - 2021-04-02
 - new grapher, generated on `--graph`
