@@ -1,7 +1,7 @@
 
-<a name="v0.3.2"></a>
-### v0.3.2 - 2022-07-07
-- upgrade git2 dependency due to compilation problem (again - please somebody write a pure rust git repository handling crate)
+<a name="v0.3.3"></a>
+### v0.3.2 - 2022-06-07
+- upgrade dependencies to fix compilation problems
 
 <a name="v0.3.1"></a>
 ### v0.3.1 - 2021-03-12
