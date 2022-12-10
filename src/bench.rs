@@ -1,7 +1,4 @@
-use {
-    crate::*,
-    chrono::prelude::*,
-};
+use {crate::*, chrono::prelude::*};
 
 /// A whole benchmark
 ///
@@ -19,7 +16,6 @@ pub struct Bench {
 }
 
 impl Bench {
-
     /// Create a benchmark with a specific name and title
     ///
     /// You normally create don't use this function but the `glassbench!`
@@ -74,7 +70,8 @@ impl Bench {
 
     /// Warning: this API is considered unstable
     pub fn task_name_from_arg(&self, arg: &str) -> Option<&str> {
-        arg.parse::<usize>().ok()
+        arg.parse::<usize>()
+            .ok()
             .and_then(|num| {
                 if num == 0 {
                     eprintln!("history argument 0 not yet implemented");
@@ -89,18 +86,11 @@ impl Bench {
     /// load the history of a task from DB
     ///
     /// You don't have to call this yourself if you use the [glassbench!] macro.
-    pub fn task_history(
-        &self,
-        db: &mut Db,
-        tbl_arg: &str,
-    ) -> Result<TaskHistory, GlassBenchError> {
+    pub fn task_history(&self, db: &mut Db, tbl_arg: &str) -> Result<TaskHistory, GlassBenchError> {
         if let Some(task_name) = self.task_name_from_arg(tbl_arg) {
             db.task_history(&self.name, task_name)
         } else {
             Err(GlassBenchError::ClientError)
         }
     }
-
 }
-
-

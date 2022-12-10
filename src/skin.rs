@@ -1,7 +1,7 @@
-use {
-    ::crossterm::style::{Attribute::*, Color::*},
+use termimad::{
+    crossterm::style::{Attribute::*, Color::*},
     minimad::Alignment,
-    termimad::*,
+    MadSkin,
 };
 
 /// crate the skin used for terminal display using Termimad

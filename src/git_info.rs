@@ -1,8 +1,4 @@
-use {
-    git2::{
-        Repository,
-    },
-};
+use git2::Repository;
 
 /// Git related information regarding the execution context
 ///
@@ -13,22 +9,18 @@ pub struct GitInfo {
 }
 
 impl GitInfo {
-
     /// Read the current git state (if any)
     pub fn read() -> Option<Self> {
-        std::env::current_dir().ok()
+        std::env::current_dir()
+            .ok()
             .and_then(|dir| Repository::discover(dir).ok())
             .and_then(|repo| {
-                repo.head().ok()
-                    .and_then(|head| {
-                        //println!("head: {:?} {:#?} ", &head.name(), &head.kind());
-                        head.peel_to_commit().ok()
-                            .map(|commit| {
-                                GitInfo {
-                                    commit_id: commit.id().to_string(),
-                                }
-                            })
+                repo.head().ok().and_then(|head| {
+                    //println!("head: {:?} {:#?} ", &head.name(), &head.kind());
+                    head.peel_to_commit().ok().map(|commit| GitInfo {
+                        commit_id: commit.id().to_string(),
                     })
+                })
             })
     }
 
@@ -46,10 +38,7 @@ impl GitInfo {
                     )
                 }
             }
-            _ => {
-                "".to_string()
-            }
+            _ => "".to_string(),
         }
     }
-
 }

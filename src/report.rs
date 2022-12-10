@@ -1,7 +1,4 @@
-use {
-    crate::*,
-    termimad::minimad::OwningTemplateExpander,
-};
+use {crate::*, termimad::minimad::OwningTemplateExpander};
 
 static MD: &str = r#"
 # ${bench-title}
@@ -24,41 +21,39 @@ pub struct Report<'b> {
 }
 
 impl<'b> Report<'b> {
-
-    pub fn new(
-        bench: &'b Bench,
-        previous: &'b Option<Bench>,
-    ) -> Self {
-        Self {
-            bench,
-            previous,
-        }
+    pub fn new(bench: &'b Bench, previous: &'b Option<Bench>) -> Self {
+        Self { bench, previous }
     }
 
     /// Print the report to the console
     ///
     /// You don't have to call this yourself if you use
     /// the `glassbench!` macro.
+    #[allow(clippy::collapsible_else_if)]
     pub fn print(&self, printer: &Printer) {
         let mut expander = OwningTemplateExpander::new();
         expander
             .set("bench-title", &self.bench.title)
             .set("bench-name", &self.bench.name);
         if let Some(previous) = self.previous.as_ref() {
-            expander.sub("comparison")
+            expander
+                .sub("comparison")
                 .set("previous-date", previous.time)
-                .set("git-diff", GitInfo::diff(&previous.git_info, &self.bench.git_info));
+                .set(
+                    "git-diff",
+                    GitInfo::diff(&previous.git_info, &self.bench.git_info),
+                );
         }
         for (idx, task) in self.bench.tasks.iter().enumerate() {
             if let Some(mes) = &task.measure {
                 let sub = expander.sub("tasks");
-                sub
-                    .set("task-num", idx+1)
+                sub.set("task-num", idx + 1)
                     .set("task-name", &task.name)
-                    .set("iterations", &mes.iterations)
+                    .set("iterations", mes.iterations)
                     .set("total-duration", format!("{:?}", &mes.total_duration))
                     .set("mean-duration", format!("{:?}", mes.mean_duration()));
-                let diff = self.previous
+                let diff = self
+                    .previous
                     .as_ref()
                     .and_then(|obench| task.diff_with(obench));
                 if let Some(diff) = diff {

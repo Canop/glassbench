@@ -1,7 +1,4 @@
-use {
-    crate::*,
-    csv2svg::*,
-};
+use {crate::*, csv2svg::*};
 
 /// A temporary structure for graphing a history
 pub struct HistoryGraph<'b> {
@@ -9,13 +6,8 @@ pub struct HistoryGraph<'b> {
 }
 
 impl<'b> HistoryGraph<'b> {
-
-    pub fn new(
-        history: &'b TaskHistory,
-    ) -> Self {
-        Self {
-            history,
-        }
+    pub fn new(history: &'b TaskHistory) -> Self {
+        Self { history }
     }
 
     /// Open the history as a SVG graph in the browser (hopefully)
@@ -24,7 +16,7 @@ impl<'b> HistoryGraph<'b> {
         let mut times = Vec::new();
         let mut durations = Vec::new();
         for record in &h.records {
-            times.push(record.time.clone());
+            times.push(record.time);
             // here we fairlessly convert u128 to i64
             let value = record.measure.mean_duration().as_nanos() as i64;
             durations.push(Some(value));
@@ -33,7 +25,8 @@ impl<'b> HistoryGraph<'b> {
         let tbl = Tbl::from_seqs(vec![
             Seq::from_increasing_times("time".to_string(), times).unwrap(),
             Seq::from_integers(name, durations).unwrap(),
-        ]).unwrap();
+        ])
+        .unwrap();
         let graph = Graph::new(tbl);
         let svg = graph.build_svg();
         let (mut w, path) = temp_file()?;

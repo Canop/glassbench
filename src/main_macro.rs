@@ -1,6 +1,4 @@
-use {
-    crate::*,
-};
+use crate::*;
 
 /// Generates a benchmark with a consistent id
 /// (using the benchmark file title), calling
@@ -51,11 +49,7 @@ macro_rules! glassbench {
 ///
 /// Unless you have special reasons, you should not
 /// use this function but the [glassbench!] function.
-pub fn create_bench<S1, S2>(
-    name: S1,
-    title: S2,
-    cmd: &Command,
-) -> Bench
+pub fn create_bench<S1, S2>(name: S1, title: S2, cmd: &Command) -> Bench
 where
     S1: Into<String>,
     S2: Into<String>,
@@ -71,14 +65,11 @@ where
 ///
 /// Unless you have special reasons, you should not
 /// use this function but the [glassbench!] function.
-pub fn after_bench(
-    bench: &mut Bench,
-    cmd: &Command,
-) -> Result<(), GlassBenchError> {
+pub fn after_bench(bench: &mut Bench, cmd: &Command) -> Result<(), GlassBenchError> {
     let printer = Printer::new();
     let mut db = Db::open()?;
     let previous = db.last_bench_named(&bench.name)?;
-    let report = Report::new(&bench, &previous);
+    let report = Report::new(bench, &previous);
     report.print(&printer);
     let mut no_save = cmd.no_save;
     if let Some(graph_arg) = cmd.graph.as_ref() {
@@ -94,7 +85,7 @@ pub fn after_bench(
         no_save = true;
     }
     if !no_save {
-        db.save_bench(&bench)?;
+        db.save_bench(bench)?;
     }
     Ok(())
 }

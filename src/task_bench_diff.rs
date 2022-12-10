@@ -1,6 +1,4 @@
-use {
-    crate::*,
-};
+use crate::*;
 
 /// Printable difference between two task measures
 pub struct TaskBenchDiff {
@@ -13,8 +11,6 @@ impl TaskBenchDiff {
         let new_ns = new_mes.mean_duration().as_nanos() as f64;
         let diff_ns = new_ns - old_ns;
         let percents = 100f64 * diff_ns / old_ns;
-        Self {
-            percents,
-        }
+        Self { percents }
     }
 }

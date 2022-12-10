@@ -30,7 +30,6 @@ pub struct HtmlViewer<'b> {
 }
 
 impl<'b> HtmlViewer<'b> {
-
     pub fn new(bench_name: &'b str, task_name: Option<&'b str>) -> Self {
         Self {
             conf: Conf {
@@ -84,20 +83,17 @@ pub fn make_temp_file() -> io::Result<(File, PathBuf)> {
         .rand_bytes(12)
         .tempfile()?
         .keep()
-        .map_err(|_| io::Error::new(
-            io::ErrorKind::Other,
-            "temp file can't be kept",
-        ))
+        .map_err(|_| io::Error::new(io::ErrorKind::Other, "temp file can't be kept"))
 }
 
 pub fn write_db<W: io::Write>(mut w: W) -> Result<(), GlassBenchError> {
     let mut file = File::open(Db::path()?)?;
     let mut bytes = Vec::new();
     file.read_to_end(&mut bytes)?;
-    writeln!(w,
+    writeln!(
+        w,
         r#"<script>const db64="{}"</script>"#,
         base64::encode(&bytes),
     )?;
     Ok(())
 }
-

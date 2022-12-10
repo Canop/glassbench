@@ -1,8 +1,4 @@
-use {
-    crate::*,
-    chrono::prelude::*,
-};
-
+use {crate::*, chrono::prelude::*};
 
 /// A measure of a task, with time, commit and tag
 #[derive(Debug)]
@@ -12,7 +8,6 @@ pub struct TaskRecord {
     pub tag: Option<String>,
     pub measure: TaskMeasure,
 }
-
 
 /// The history of the measures of ta task as defined
 /// by the bench name and task name

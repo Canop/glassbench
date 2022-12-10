@@ -1,8 +1,10 @@
 use {
     super::*,
-    ::crossterm::tty::IsTty,
-    minimad::{OwningTemplateExpander, TextTemplate},
-    termimad::*,
+    termimad::{
+        crossterm::tty::IsTty,
+        minimad::{OwningTemplateExpander, TextTemplate},
+        terminal_size, FmtText, MadSkin,
+    },
 };
 
 /// A small helper to print using markdown templates

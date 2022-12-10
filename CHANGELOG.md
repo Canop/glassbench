@@ -1,3 +1,5 @@
+### next
+- fix a compilation problem (import ambiguity) - Thanks @orhun
 
 <a name="v0.3.3"></a>
 ### v0.3.2 - 2022-06-07

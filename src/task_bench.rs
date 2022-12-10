@@ -24,7 +24,6 @@ pub const OPTIMAL_DURATION_NS: u128 = Duration::from_secs(2).as_nanos();
 /// for benchmarking (to minimize random dispersion)
 pub const MINIMAL_ITERATIONS: u32 = 50;
 
-
 /// Benching of one task
 #[derive(Debug, Clone)]
 pub struct TaskBench {
@@ -33,7 +32,6 @@ pub struct TaskBench {
 }
 
 impl TaskBench {
-
     pub(crate) fn new(name: String) -> Self {
         Self {
             name,
@@ -42,11 +40,14 @@ impl TaskBench {
     }
 
     pub(crate) fn diff_with(&self, old_bench: &Bench) -> Option<TaskBenchDiff> {
-        old_bench.tasks.iter()
+        old_bench
+            .tasks
+            .iter()
             .find(|tb| tb.name == self.name)
             .and_then(|old_tb| old_tb.measure)
             .and_then(|old_mes| {
-                self.measure.map(|new_mes| TaskBenchDiff::new(old_mes, new_mes))
+                self.measure
+                    .map(|new_mes| TaskBenchDiff::new(old_mes, new_mes))
             })
     }
 

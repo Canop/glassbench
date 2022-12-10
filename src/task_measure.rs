@@ -1,6 +1,4 @@
-use {
-    std::time::Duration,
-};
+use std::time::Duration;
 
 /// The result of the measure of a task: number of iterations
 /// and total duration

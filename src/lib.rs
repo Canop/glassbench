@@ -15,9 +15,8 @@ prevent the optimizer to remove their construction
 
 */
 
-
-mod black_box;
 mod bench;
+mod black_box;
 mod command;
 mod db;
 mod error;
@@ -35,20 +34,7 @@ mod task_history;
 mod task_measure;
 
 pub use {
-    db::*,
-    bench::*,
-    black_box::*,
-    command::*,
-    error::*,
-    git_info::*,
-    history_graph::*,
-    history_tbl::*,
-    html_viewer::*,
-    main_macro::*,
-    printer::*,
-    report::*,
-    task_bench::*,
-    task_bench_diff::*,
-    task_history::*,
-    task_measure::*,
+    bench::*, black_box::*, command::*, db::*, error::*, git_info::*, history_graph::*,
+    history_tbl::*, html_viewer::*, main_macro::*, printer::*, report::*, task_bench::*,
+    task_bench_diff::*, task_history::*, task_measure::*,
 };

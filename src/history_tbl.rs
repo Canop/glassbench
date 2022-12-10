@@ -1,7 +1,4 @@
-use {
-    crate::*,
-    termimad::minimad::OwningTemplateExpander,
-};
+use {crate::*, termimad::minimad::OwningTemplateExpander};
 
 static MD: &str = r#"
 ## History of ${bench-name} / ${task-name}
@@ -21,13 +18,8 @@ pub struct HistoryTbl<'b> {
 }
 
 impl<'b> HistoryTbl<'b> {
-
-    pub fn new(
-        history: &'b TaskHistory,
-    ) -> Self {
-        Self {
-            history,
-        }
+    pub fn new(history: &'b TaskHistory) -> Self {
+        Self { history }
     }
 
     /// Print the history to the console
@@ -39,8 +31,7 @@ impl<'b> HistoryTbl<'b> {
             .set("task-name", &h.task_name);
         for record in &h.records {
             let sub = expander.sub("records");
-            sub
-                .set("time", record.time)
+            sub.set("time", record.time)
                 .set(
                     "commit",
                     if let Some(gi) = record.git_info.as_ref() {
@@ -57,7 +48,10 @@ impl<'b> HistoryTbl<'b> {
                         " ".to_string()
                     },
                 )
-                .set("mean-duration", format!("{:?}", record.measure.mean_duration()));
+                .set(
+                    "mean-duration",
+                    format!("{:?}", record.measure.mean_duration()),
+                );
         }
         printer.print(expander, MD);
     }

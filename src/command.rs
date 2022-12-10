@@ -1,4 +1,3 @@
-
 /// What the user asked at the cli
 #[derive(Debug, Clone)]
 pub struct Command {
@@ -11,11 +10,9 @@ pub struct Command {
 }
 
 impl Command {
-
     /// read std::env::args
     pub fn read() -> Self {
-        let mut args = std::env::args()
-            .skip(1); // it's the path to the compiled bench in target
+        let mut args = std::env::args().skip(1); // it's the path to the compiled bench in target
         let mut benches = Vec::new();
         let mut graph = None;
         let mut history = None;
@@ -74,7 +71,6 @@ impl Command {
 
     /// tell whether this specific bench should be included
     pub fn include_bench(&self, name: &str) -> bool {
-        self.benches.is_empty() || self.benches.iter().any(|g| g==name)
+        self.benches.is_empty() || self.benches.iter().any(|g| g == name)
     }
-
 }

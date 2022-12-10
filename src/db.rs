@@ -1,16 +1,8 @@
 use {
     crate::*,
     chrono::prelude::*,
-    rusqlite::{
-        params,
-        Connection,
-        OptionalExtension,
-        Row,
-    },
-    std::{
-        path::PathBuf,
-        time::Duration,
-    },
+    rusqlite::{params, Connection, OptionalExtension, Row},
+    std::{path::PathBuf, time::Duration},
 };
 
 /// version of the schema
@@ -53,12 +45,9 @@ pub struct Db {
 }
 
 impl Db {
-
     /// return the name of the glassbench database file
     pub fn path() -> Result<PathBuf, GlassBenchError> {
-        Ok(
-            std::env::current_dir()?.join(format!("glassbench_v{}.db", VERSION))
-        )
+        Ok(std::env::current_dir()?.join(format!("glassbench_v{}.db", VERSION)))
     }
 
     /// Create a new instance of DB, creating the sqlite file and
@@ -66,9 +55,7 @@ impl Db {
     pub fn open() -> Result<Self, GlassBenchError> {
         let con = Connection::open(Self::path()?)?;
         create_tables(&con)?;
-        Ok(Db {
-            con,
-        })
+        Ok(Db { con })
     }
 
     /// Save a bench, with included tasks if any. Return the id of the bench
@@ -87,15 +74,12 @@ impl Db {
         let mut ps = self.con.prepare(
             "INSERT INTO task
                 (bench, name, iterations, total_duration_ns, mean_duration_ns)
-            VALUES (?1, ?2, ?3, ?4, ?5)"
+            VALUES (?1, ?2, ?3, ?4, ?5)",
         )?;
-        let tasks = bench.tasks
+        let tasks = bench
+            .tasks
             .iter()
-            .filter_map(|t| {
-                t.measure
-                    .as_ref()
-                    .map(|mes| (&t.name, mes))
-            });
+            .filter_map(|t| t.measure.as_ref().map(|mes| (&t.name, mes)));
         for (name, mes) in tasks {
             ps.execute(params![
                 bench_id,
@@ -109,25 +93,22 @@ impl Db {
     }
 
     /// Load the last bench having this name
-    pub fn last_bench_named(
-        &mut self,
-        name: &str,
-    ) -> Result<Option<Bench>, GlassBenchError> {
-        match self.con.query_row(
-            "SELECT id, time, name, title, tag, commit_id
+    pub fn last_bench_named(&mut self, name: &str) -> Result<Option<Bench>, GlassBenchError> {
+        match self
+            .con
+            .query_row(
+                "SELECT id, time, name, title, tag, commit_id
             fROM bench WHERE name=?1 ORDER BY id DESC LIMIT 1",
-            params![name],
-            parse_bench,
-        ).optional()? {
+                params![name],
+                parse_bench,
+            )
+            .optional()?
+        {
             Some((bench_id, mut bench)) => {
                 let mut ps = self.con.prepare(
-                    "SELECT name, iterations, total_duration_ns FROM task WHERE bench=?1"
+                    "SELECT name, iterations, total_duration_ns FROM task WHERE bench=?1",
                 )?;
-                let iter = ps
-                    .query_map(
-                        params![bench_id],
-                        parse_task,
-                    )?;
+                let iter = ps.query_map(params![bench_id], parse_task)?;
                 for task in iter {
                     bench.tasks.push(task?);
                 }
@@ -157,13 +138,9 @@ impl Db {
                 task.iterations, task.total_duration_ns
             FROM task JOIN bench ON task.bench=bench.id
             WHERE bench.name=?1 AND task.name=?2
-            ORDER BY bench.time"
+            ORDER BY bench.time",
         )?;
-        let iter = ps
-            .query_map(
-                params![bench_name, task_name],
-                parse_task_record,
-            )?;
+        let iter = ps.query_map(params![bench_name, task_name], parse_task_record)?;
         for record in iter {
             history.records.push(record?);
         }
