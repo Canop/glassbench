@@ -1,8 +1,9 @@
-### next
+<a name="v0.3.4"></a>
+### v0.3.4 - 2022-12-10
 - fix a compilation problem (import ambiguity) - Thanks @orhun
 
 <a name="v0.3.3"></a>
-### v0.3.2 - 2022-06-07
+### v0.3.3 - 2022-06-07
 - upgrade dependencies to fix compilation problems
 
 <a name="v0.3.1"></a>
