@@ -1,5 +1,5 @@
 use {
-    crossterm::style::{Attribute::*, Color::*},
+    ::crossterm::style::{Attribute::*, Color::*},
     minimad::Alignment,
     termimad::*,
 };

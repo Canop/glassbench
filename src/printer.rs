@@ -1,6 +1,6 @@
 use {
     super::*,
-    crossterm::tty::IsTty,
+    ::crossterm::tty::IsTty,
     minimad::{OwningTemplateExpander, TextTemplate},
     termimad::*,
 };
