@@ -12,7 +12,7 @@ categories = ["development-tools", "development-tools::profiling"]
 [dependencies]
 base64 = "0.13"
 chrono = { version = "0.4", features = ["serde"] }
-csv2svg = "0.1.10"
+csv2svg = "0.1.12"
 git2 = { version="0.14", default-features=false }
 lazy_static = "1.4"
 open = "1.1"
@@ -20,5 +20,5 @@ rusqlite = { version = "0.24.2", features = ["bundled"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 tempfile = "3.1"
-termimad = { version = "0.25", default-features = false, features = ["special-renders"] }
+termimad = { version = "0.25.5", default-features = false, features = ["special-renders"] }
 thiserror = "1.0"

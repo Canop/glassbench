@@ -1,3 +1,7 @@
+<a name="v0.3.6"></a>
+### v0.3.6 - 2023/10/14
+- cross-project dependency versions harmonization to ease vetting
+
 <a name="v0.3.4"></a>
 ### v0.3.4 - 2022-12-10
 - fix a compilation problem (import ambiguity) - Thanks @orhun
