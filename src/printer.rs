@@ -35,6 +35,12 @@ impl Printer {
     }
 }
 
+impl Default for Printer {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 fn is_output_piped() -> bool {
     !std::io::stdout().is_tty()
 }

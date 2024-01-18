@@ -1,3 +1,8 @@
+
+<a name="v0.4.0"></a>
+### v0.4.0 - 2024-01-18
+- cross-project dependency versions harmonization, termimad is now 0.28
+
 <a name="v0.3.6"></a>
 ### v0.3.6 - 2023/10/14
 - cross-project dependency versions harmonization to ease vetting
