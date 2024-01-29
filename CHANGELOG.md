@@ -1,4 +1,8 @@
 
+<a name="v0.4.1"></a>
+### v0.4.1 - 2024-01-29
+- update termimad to 0.29
+
 <a name="v0.4.0"></a>
 ### v0.4.0 - 2024-01-18
 - cross-project dependency versions harmonization, termimad is now 0.28
