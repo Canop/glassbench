@@ -154,7 +154,7 @@ fn parse_bench(row: &Row<'_>) -> Result<(i64, Bench), rusqlite::Error> {
     let bench_id: i64 = row.get(0)?;
     let commit_id: Option<String> = row.get(5)?;
     let bench = Bench {
-        time: Utc.timestamp(row.get(1)?, 0),
+        time: Utc.timestamp_opt(row.get(1)?, 0).unwrap(),
         name: row.get(2)?,
         title: row.get(3)?,
         tag: row.get(4)?,
@@ -184,7 +184,7 @@ fn parse_task_record(row: &Row<'_>) -> Result<TaskRecord, rusqlite::Error> {
     let commit_id: Option<String> = row.get(2)?;
     let nanos: i64 = row.get(4)?;
     Ok(TaskRecord {
-        time: Utc.timestamp(row.get(0)?, 0),
+        time: Utc.timestamp_opt(row.get(0)?, 0).unwrap(),
         git_info: commit_id.map(|commit_id| GitInfo { commit_id }),
         tag: row.get(1)?,
         measure: TaskMeasure {
