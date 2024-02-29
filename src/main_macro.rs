@@ -6,7 +6,7 @@ use crate::*;
 ///
 /// ```no-test
 /// glassbench!(
-///     "Sortings",
+///     "Sorting",
 ///     bench_number_sorting,
 ///     bench_alpha_sorting,
 /// );
@@ -14,7 +14,7 @@ use crate::*;
 ///
 /// This generates the whole main function.
 /// If you want to set the bench name yourself
-/// (not recommanded), or change the way the launch
+/// (not recommended), or change the way the launch
 /// arguments are used, you can write the main
 /// yourself and call [create_bench] and [after_bench]
 /// instead of using this macro.

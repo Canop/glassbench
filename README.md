@@ -170,10 +170,10 @@ cargo bench -- -- --no-save
 The command has the following form:
 
 ```bash
-cargo bench -- <optional list of benchs to run> -- <glassbench arguments>
+cargo bench -- <optional list of benches to run> -- <glassbench arguments>
 ```
 
-The names of the benchs are the names of the bench files (see examples below).
+The names of the benches are the names of the bench files (see examples below).
 
 The glassbench arguments let you display the history or graph the records for a specific task, specify a tag, etc.
 
