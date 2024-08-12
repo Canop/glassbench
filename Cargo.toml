@@ -1,6 +1,6 @@
 [package]
 name = "glassbench"
-version = "0.4.1"
+version = "0.4.2"
 authors = ["dystroy <denys.seguret@gmail.com>"]
 repository = "https://github.com/Canop/glassbench"
 description = "rust benchmark with memory"
@@ -12,15 +12,15 @@ categories = ["development-tools", "development-tools::profiling"]
 [dependencies]
 base64 = "0.13"
 chrono = { version = "0.4", features = ["serde"] }
-csv2svg = "0.2"
-git2 = { version="0.14", default-features=false }
+csv2svg = "0.2.3"
+git2 = { version="^0.14", default-features=false }
 lazy_static = "1.4"
 open = "1.1"
 rusqlite = { version = "0.24.2", features = ["bundled"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 tempfile = "3.1"
-termimad = { version = "0.29.0", default-features = false, features = ["special-renders"] }
+termimad = { version = "0.30", default-features = false, features = ["special-renders"] }
 thiserror = "1.0"
 
 [patch.crates-io]

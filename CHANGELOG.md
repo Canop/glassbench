@@ -1,4 +1,8 @@
 
+<a name="v0.4.2"></a>
+### v0.4.2 - 2024-08-12
+- update termimad to 0.30
+
 <a name="v0.4.1"></a>
 ### v0.4.1 - 2024-01-29
 - update termimad to 0.29
