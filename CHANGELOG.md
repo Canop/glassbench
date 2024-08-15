@@ -1,3 +1,7 @@
+<a name="v0.4.3"></a>
+### v0.4.3 - 2024-08-15
+- update git2 to 0.19
+- update rusqlite to 0.31
 
 <a name="v0.4.2"></a>
 ### v0.4.2 - 2024-08-12
