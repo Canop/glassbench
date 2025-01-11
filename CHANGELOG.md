@@ -1,3 +1,9 @@
+<a name="v0.4.4"></a>
+### v0.4.4 - 2025-01-11
+- update git2 to 0.20
+- update rusqlite to 0.32
+- update termimad to 0.31
+
 <a name="v0.4.3"></a>
 ### v0.4.3 - 2024-08-15
 - update git2 to 0.19
