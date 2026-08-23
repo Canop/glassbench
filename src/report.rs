@@ -50,7 +50,7 @@ impl<'b> Report<'b> {
                 sub.set("task-num", idx + 1)
                     .set("task-name", &task.name)
                     .set("iterations", mes.iterations)
-                    .set("total-duration", format!("{:?}", &mes.total_duration))
+                    .set("total-duration", format!("{:?}", mes.total_duration))
                     .set("mean-duration", format!("{:?}", mes.mean_duration()));
                 let diff = self
                     .previous

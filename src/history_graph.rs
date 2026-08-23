@@ -21,7 +21,7 @@ impl<'b> HistoryGraph<'b> {
             let value = record.measure.mean_duration().as_nanos() as i64;
             durations.push(Some(value));
         }
-        let name = format!("{} / {} (ns)", &h.bench_name, &h.task_name);
+        let name = format!("{} / {} (ns)", h.bench_name, h.task_name);
         let tbl = Tbl::from_seqs(vec![
             Seq::from_increasing_times("time".to_string(), times).unwrap(),
             Seq::from_integers(name, durations).unwrap(),
