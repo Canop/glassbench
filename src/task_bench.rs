@@ -9,7 +9,7 @@ use {
 /// Number of iterations to do before everything else
 pub const WARMUP_ITERATIONS: usize = 2;
 
-/// Number of iterations to do, after warmup, to estimate the total number
+/// Number of iterations to do, after warm-up, to estimate the total number
 /// of iterations to do
 ///
 /// (regarding real benchmark, it can be considered as part of benchmark)
@@ -53,8 +53,8 @@ impl TaskBench {
 
     /// Call the function to measure
     ///
-    /// There will be an initial warmup, after which
-    /// the function will be called enought times to
+    /// There will be an initial warm-up, after which
+    /// the function will be called enough times to
     /// get a reliable estimation of its duration.
     pub fn iter<M, R>(&mut self, mut measured: M)
     where
@@ -64,7 +64,7 @@ impl TaskBench {
             eprintln!("bench already used - please fix your benchmark");
             return;
         }
-        // just a warmup
+        // just a warm-up
         for _ in 0..WARMUP_ITERATIONS {
             measured();
         }
